@@ -1,57 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Countdown alla fine della scuola</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-image: url('sfondo.jpg'); /* Cambia con l'URL o il nome del tuo file */
+            font-family: 'Arial', sans-serif;
+            background-image: url('sfondo.jpg'); /* Cambia con il tuo file */
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             text-align: center;
-            color: rgb(16, 212, 62); /* Testo bianco per maggiore visibilità */
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            backdrop-filter: blur(5px);
         }
 
         h1 {
-            font-size: 48px;
-            margin-top: 50px;
+            font-size: 50px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
             margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         #countdown {
-            font-size: 64px;
+            font-size: 40px;
             font-weight: bold;
-            margin-bottom: 50px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
         }
 
-        #countdown span {
-            display: inline-block;
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
             min-width: 80px;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.8); /* Sfondo semi-trasparente */
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            margin: 0 10px;
-            color: black;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
         }
 
-        #countdown span.num {
-            background-color: #333;
-            color: #FFF;
+        .num {
+            font-size: 50px;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        .label {
+            font-size: 18px;
+            text-transform: uppercase;
+            color: #ddd;
         }
     </style>
 </head>
 <body>
     <h1>Countdown alla fine della scuola</h1>
-    <div id="countdown"></div>
+    <div id="countdown">
+        <div class="time-box"><span class="num" id="days">0</span><span class="label">Giorni</span></div>
+        <div class="time-box"><span class="num" id="hours">0</span><span class="label">Ore</span></div>
+        <div class="time-box"><span class="num" id="minutes">0</span><span class="label">Minuti</span></div>
+        <div class="time-box"><span class="num" id="seconds">0</span><span class="label">Secondi</span></div>
+    </div>
 
     <script>
         var countDownDate = new Date("June 7, 2025 13:00:00").getTime();
 
-        var x = setInterval(function() {
+        function updateCountdown() {
             var now = new Date().getTime();
             var distance = countDownDate - now;
 
@@ -60,19 +84,19 @@
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("countdown").innerHTML = 
-                "<span class='num'>" + days + "</span><span>giorni</span> " +
-                "<span class='num'>" + hours + "</span><span>ore</span> " +
-                "<span class='num'>" + minutes + "</span><span>minuti</span> " +
-                "<span class='num'>" + seconds + "</span><span>secondi</span>";
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
 
             if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdown").innerHTML = 
-                    "La scuola è finita! Buone vacanze da Pasqui";
-                countDownDate = new Date("June 7, " + (new Date().getFullYear() + 1) + " 00:00:00").getTime();
+                document.getElementById("countdown").innerHTML = "<h2>La scuola è finita! Buone vacanze! ☀️</h2>";
             }
-        }, 1000);
+        }
+        
+        var x = setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
